@@ -7,7 +7,7 @@ import {
 export default (state = {}, action) => {
   switch (action.type) {
     case FETCH_CARS:
-      return { ...state, ..._.mapKeys(action.payload.listings, 'id') }
+      return { ..._.mapKeys(action.payload.listings, 'id') }
     default:
       return state;
   }

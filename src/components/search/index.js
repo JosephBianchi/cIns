@@ -83,8 +83,8 @@ class Search extends React.Component {
 
 const validate = (formValues) => {
   const errors = {}
-  if (!formValues.manufacturer) {
-      errors.manufacturer = 'You must enter a manufacturer';
+  if (!formValues.make) {
+      errors.make = 'You must enter a make';
     }
   if (!formValues.model) {
     errors.model = 'You must enter a model';
