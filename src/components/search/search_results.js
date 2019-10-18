@@ -28,29 +28,27 @@ class SearchResults extends React.Component {
 
   render() {
 
-    const avgPrice = _.meanBy(this.props.cars, 'price');
+    const avgPrice = Math.floor(_.meanBy(this.props.cars, 'price'));
 
     if (!this.props.cars) {
       return;
     }
     return (
       <div>
-        <span><FaCarAlt
+        <FaCarAlt
           className=""
           size="2.25em"
           color="#2CDA9D"
         />
-        </span>
         <h2>Vehicles: {this.props.cars.length}</h2>
-          <span><FaMoneyCheckAlt
+          <FaMoneyCheckAlt
             className=""
             size="2.25em"
             color="#2CDA9D"
           />
-          </span>
-          <h2>Average Price: {avgPrice}</h2>
+        <h2>Average Price: {avgPrice > 0 ? '$' + avgPrice : ''}</h2>
           <Container fluid={true}>
-            <Row>
+            <Row gutter={false}>
               {this.renderList()}
             </Row>
           </Container>

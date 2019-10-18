@@ -15,14 +15,14 @@ class Search extends React.Component {
     if (touched && error) {
       return (
         <div className="">
-          <div className="">{error}</div>
+          <div className="text-danger">{error}</div>
         </div>
       )
     }
   }
 
   renderInput = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
+    const className = `field ${meta.error && meta.touched ? '' : ''}`;
     return (
       <div>
         <input className="form-control"
@@ -44,7 +44,7 @@ class Search extends React.Component {
       <Container className={styles.searchContainer} fluid={true}>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="">
           <Row>
-            <Col xs={12} md={4}>
+            <Col xs={12} md={3}>
               <div className="">
                 <div className="">
                   <span className="input-group-text">Enter Make</span>
@@ -52,7 +52,7 @@ class Search extends React.Component {
                 <Field name="make" component={this.renderInput}/>
               </div>
             </Col>
-            <Col xs={12} md={4}>
+            <Col xs={12} md={3}>
               <div className="">
                 <div className="">
                   <span className="input-group-text">Enter Model</span>
@@ -60,12 +60,20 @@ class Search extends React.Component {
                 <Field name="model" component={this.renderInput}/>
               </div>
             </Col>
-            <Col xs={12} md={4}>
+            <Col xs={12} md={3}>
               <div className="">
                 <div className="">
                   <span className="input-group-text">Enter Year</span>
                 </div>
                 <Field name="year" component={this.renderInput}/>
+              </div>
+            </Col>
+            <Col xs={12} md={3}>
+              <div className="">
+                <div className="">
+                  <span className="input-group-text">Enter City</span>
+                </div>
+                <Field name="city" component={this.renderInput}/>
               </div>
             </Col>
           </Row>
@@ -92,6 +100,9 @@ const validate = (formValues) => {
   }
   if (!formValues.year) {
     errors.year = 'You must enter a year';
+  }
+  if (!formValues.city) {
+    errors.city = 'You must enter a city';
   }
   return errors;
 }
