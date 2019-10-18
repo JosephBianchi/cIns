@@ -38,14 +38,14 @@ class SearchResults extends React.Component {
         <span><FaCarAlt
           className=""
           size="2.25em"
-          color="#15DB95"
+          color="#2CDA9D"
         />
         </span>
         <h2>Vehicles: {this.props.cars.length}</h2>
           <span><FaMoneyCheckAlt
             className=""
             size="2.25em"
-            color="#15DB95"
+            color="#2CDA9D"
           />
           </span>
           <h2>Average Price: {avgPrice}</h2>

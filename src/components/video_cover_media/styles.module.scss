@@ -1,0 +1,24 @@
+.playerWrapperNotLoaded {
+  opacity: 0.4;
+  background-image: linear-gradient(to bottom, #080F5B, #0D19A3);
+  position: relative;
+  padding-top: 56.25%;
+  z-index: -1;
+  opacity: 0;
+}
+
+.playerWrapperLoaded {
+  height: 100%;
+  opacity: 0.4;
+  background-image: linear-gradient(to bottom, #080F5B, #0D19A3);
+  position: relative;
+  padding-top: 56.25%;
+  z-index: -1;
+}
+
+
+.reactPlayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

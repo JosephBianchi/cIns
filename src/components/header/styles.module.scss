@@ -1,0 +1,14 @@
+.myNav:hover {
+  color: #44CF6C !important;
+  cursor: pointer;
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  border-radius: 10px;
+}
+
+.navBar {
+  background-color: transparent;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+}

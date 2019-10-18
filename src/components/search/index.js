@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 
 import SearchResults from './search_results';
 import { fetchCars } from '../../actions';
+import styles from "./styles.module.scss";
 
 class Search extends React.Component {
 
@@ -41,7 +41,7 @@ class Search extends React.Component {
 
   render() {
     return(
-      <Container fluid={true}>
+      <Container className={styles.searchContainer} fluid={true}>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="">
           <Row>
             <Col xs={12} md={4}>
@@ -77,6 +77,7 @@ class Search extends React.Component {
         </form>
         <SearchResults />
       </Container>
+
     )
   }
 }
