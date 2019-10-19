@@ -1,12 +1,13 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import _ from 'lodash';
 
 import SearchResults from './search_results';
-import { fetchCars } from '../../actions';
+import { fetchCars, fetchModels } from '../../actions';
 import styles from './styles.module.scss';
 import DropDown from '../form_components/drop_down';
 import { years, makes } from '../form_components/data';
@@ -43,6 +44,19 @@ class Search extends React.Component {
     this.props.fetchCars(formValues);
   }
 
+  onFocus = () => {
+    let make = this.props.searchForm;
+    if (make === undefined) {
+      console.log('enter a model');
+    } else {
+      this.props.fetchModels(make.make.value)
+    }
+  }
+
+  models = () => Object.keys(this.props.models).map((model) => {
+        return {value: model, label: model};
+  })
+
   render() {
     return(
       <Container className={styles.searchContainer} fluid={true}>
@@ -54,7 +68,7 @@ class Search extends React.Component {
             </Col>
             <Col xs={12} md={2}>
               <span className="input-group-text">Enter Model</span>
-              <Field name="model" component={this.renderInput}/>
+              <Field name="model" component={DropDown} options={this.models()} onFocus={this.onFocus} />
             </Col>
             <Col xs={12} md={2}>
               <span className="input-group-text">Enter Year</span>
@@ -100,11 +114,13 @@ const validate = (formValues) => {
 
 const mapStateToProps = (state) => {
   return {
-    cars: state.cars
+    cars: state.cars,
+    models: state.models,
+    searchForm: getFormValues('searchForm')(state)
   }
 }
 
-export default connect(mapStateToProps, { fetchCars })(reduxForm({
+export default connect(mapStateToProps, { fetchCars, fetchModels })(reduxForm({
   form: 'searchForm',
   validate: validate
 })(Search));
