@@ -7,16 +7,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card'
 
+import styles from './styles.module.scss';
+
 class SearchResults extends React.Component {
 
   renderList = () => {
     return this.props.cars.map(car => {
       return(
-        <Col xs={12} sm={6} md={4}>
-          <Card border="primary" style={{ width: '18rem' }}>
+        <Col className={`${styles.carCol} d-flex align-items-stretch`} xs={12} sm={6} md={4} lg={3} key={car.id}>
+          <Card className={`${styles.carCard} bg-alice-blue border-polished-pine`} border="primary" style={{ width: '18rem' }}>
             <Card.Header>${car.price}</Card.Header>
             <Card.Body>
-              <Card.Title>{car.heading}</Card.Title>
+              <Card.Title className="text-sea-green">{car.heading}</Card.Title>
               <Card.Img variant="bottom" src={car.media.photo_links[0]} />
             </Card.Body>
           </Card>
@@ -48,7 +50,7 @@ class SearchResults extends React.Component {
           />
         <h2>Average Price: {avgPrice > 0 ? '$' + avgPrice : ''}</h2>
           <Container fluid={true}>
-            <Row gutter={false}>
+            <Row>
               {this.renderList()}
             </Row>
           </Container>

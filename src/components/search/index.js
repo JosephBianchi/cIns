@@ -7,7 +7,11 @@ import Col from 'react-bootstrap/Col';
 
 import SearchResults from './search_results';
 import { fetchCars } from '../../actions';
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
+import DropDown from '../form_components/drop_down';
+import { years, makes } from '../form_components/data';
+import { GoogleMap } from '../maps';
+
 
 class Search extends React.Component {
 
@@ -44,40 +48,27 @@ class Search extends React.Component {
       <Container className={styles.searchContainer} fluid={true}>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="">
           <Row>
-            <Col xs={12} md={3}>
-              <div className="">
-                <div className="">
-                  <span className="input-group-text">Enter Make</span>
-                </div>
-                <Field name="make" component={this.renderInput}/>
-              </div>
+            <Col xs={12} md={{span: 2, offset: 1}}>
+              <span className="input-group-text">Enter Make</span>
+              <Field name="make" component={DropDown} options={makes} />
             </Col>
-            <Col xs={12} md={3}>
-              <div className="">
-                <div className="">
-                  <span className="input-group-text">Enter Model</span>
-                </div>
-                <Field name="model" component={this.renderInput}/>
-              </div>
+            <Col xs={12} md={2}>
+              <span className="input-group-text">Enter Model</span>
+              <Field name="model" component={this.renderInput}/>
             </Col>
-            <Col xs={12} md={3}>
-              <div className="">
-                <div className="">
-                  <span className="input-group-text">Enter Year</span>
-                </div>
-                <Field name="year" component={this.renderInput}/>
-              </div>
+            <Col xs={12} md={2}>
+              <span className="input-group-text">Enter Year</span>
+              <Field name="year" component={DropDown} options={years} />
             </Col>
-            <Col xs={12} md={3}>
-              <div className="">
-                <div className="">
-                  <span className="input-group-text">Enter City</span>
-                </div>
-                <Field name="city" component={this.renderInput}/>
-              </div>
+            <Col xs={12} md={2}>
+              <span className="input-group-text">Enter City</span>
+              <Field name="city" component={this.renderInput}/>
+            </Col>
+            <Col xs={12} md={2}>
+
             </Col>
           </Row>
-          <Row className="justify-content-center text-center">
+          <Row className={`${styles.searchButton} justify-content-center text-center`}>
             <Col xs={12}>
               <button className="btn btn-primary">Search</button>
             </Col>

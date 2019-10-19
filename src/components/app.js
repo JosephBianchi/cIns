@@ -5,16 +5,19 @@ import history from '../history';
 import Header from './header';
 import CarIndex from './cover_container';
 import Search from './search';
+import ScrollToTop from './scroll_to_top';
 
 const App = () => {
   return (
     <div>
       <Router history={ history }>
           <Header />
-          <Switch>
-            <Route path="/" exact component={CarIndex} />
-            <Route path="/search" exact component={Search} />
-          </Switch>
+          <ScrollToTop>
+            <Switch>
+              <Route path="/" exact component={CarIndex} />
+              <Route path="/search" exact component={Search} />
+            </Switch>
+          </ScrollToTop>
       </Router>
     </div>
   )
