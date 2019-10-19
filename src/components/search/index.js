@@ -4,57 +4,68 @@ import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import _ from 'lodash';
 
 import SearchResults from './search_results';
-import { fetchCars, fetchModels } from '../../actions';
+import { fetchCars, fetchModels, fetchCities, fetchYears } from '../../actions';
 import styles from './styles.module.scss';
 import DropDown from '../form_components/drop_down';
 import { years, makes } from '../form_components/data';
-import { GoogleMap } from '../maps';
-
 
 class Search extends React.Component {
-
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return (
-        <div className="">
-          <div className="text-danger">{error}</div>
-        </div>
-      )
-    }
-  }
-
-  renderInput = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? '' : ''}`;
-    return (
-      <div>
-        <input className="form-control"
-          {...input}
-          autoComplete="off"
-        />
-        {this.renderError(meta)}
-      </div>
-    )
-  }
-
 
   onSubmit = (formValues) => {
     this.props.fetchCars(formValues);
   }
 
-  onFocus = () => {
-    let make = this.props.searchForm;
-    if (make === undefined) {
+  onFocusModel = () => {
+    let make = this.props.searchForm.make;
+    let model = this.props.searchForm
+    if (make === undefined || !make) {
+      console.log('enter a make');
+      console.log(model);
+    } else if (make.value === undefined) {
+      console.log(model);
+      console.log('enter a make');
+    } else {
+      console.log(model);
+      this.props.fetchModels(make.value)
+    }
+  }
+
+  onFocusCity = () => {
+    let model = this.props.searchForm.model;
+    if (model === undefined || !model) {
+      console.log('enter a model');
+      console.log(model);
+    } else if (model.value === undefined) {
+      console.log(model);
       console.log('enter a model');
     } else {
-      this.props.fetchModels(make.make.value)
+      console.log(model);
+      this.props.fetchCities(model.value)
+    }
+  }
+
+  onFocusYear = () => {
+    let model = this.props.searchForm.model;
+    let city = this.props.searchForm.city;
+    if (model === undefined || city === undefined || !model || !city) {
+      console.log('enter a city and model');
+    } else if (model.value === undefined || city.value === undefined) {
+      this.props.fetchYears(model.value, city.value)
     }
   }
 
   models = () => Object.keys(this.props.models).map((model) => {
-        return {value: model, label: model};
+    return {value: model, label: model};
+  })
+
+  cities = () => Object.keys(this.props.cities).map((city) => {
+    return {value: city, label: city};
+  })
+
+  years = () => Object.keys(this.props.years).map((year) => {
+    return {value: year, label: year};
   })
 
   render() {
@@ -68,18 +79,15 @@ class Search extends React.Component {
             </Col>
             <Col xs={12} md={2}>
               <span className="input-group-text">Enter Model</span>
-              <Field name="model" component={DropDown} options={this.models()} onFocus={this.onFocus} />
-            </Col>
-            <Col xs={12} md={2}>
-              <span className="input-group-text">Enter Year</span>
-              <Field name="year" component={DropDown} options={years} />
+              <Field name="model" component={DropDown} options={this.models()} onFocus={this.onFocusModel} />
             </Col>
             <Col xs={12} md={2}>
               <span className="input-group-text">Enter City</span>
-              <Field name="city" component={this.renderInput}/>
+              <Field name="city" component={DropDown} options={this.cities()} onFocus={this.onFocusCity} />
             </Col>
             <Col xs={12} md={2}>
-
+              <span className="input-group-text">Enter Year</span>
+              <Field name="year" component={DropDown} options={years} onFocus={this.onFocusYear} />
             </Col>
           </Row>
           <Row className={`${styles.searchButton} justify-content-center text-center`}>
@@ -116,11 +124,12 @@ const mapStateToProps = (state) => {
   return {
     cars: state.cars,
     models: state.models,
-    searchForm: getFormValues('searchForm')(state)
+    cities: state.cities,
+    searchForm: {...{}, ...getFormValues('searchForm')(state)}
   }
 }
 
-export default connect(mapStateToProps, { fetchCars, fetchModels })(reduxForm({
+export default connect(mapStateToProps, { fetchCars, fetchModels, fetchCities })(reduxForm({
   form: 'searchForm',
   validate: validate
 })(Search));

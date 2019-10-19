@@ -10,19 +10,33 @@ const ControlComponent = props => (
 );
 
 export default class DropDown extends React.Component {
+
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div>
+          <div className="text-danger">{error}</div>
+        </div>
+      )
+    }
+  }
+
   render() {
-    const { name, options, input } = this.props;
+    const { name, options, input, meta } = this.props;
     return (
-      <Select
-        {...input}
-        components={{ Control: ControlComponent }}
-        onChange={value => input.onChange(value)}
-        onBlur={() => input.onBlur(input.value)}
-        isClearable
-        isSearchable
-        name={name}
-        options={options}
-      />
+      <div>
+        <Select
+          {...input}
+          components={{ Control: ControlComponent }}
+          onChange={value => input.onChange(value)}
+          onBlur={() => input.onBlur(input.value)}
+          isClearable
+          isSearchable
+          name={name}
+          options={options}
+        />
+      {this.renderError(meta)}
+      </div>
     );
   }
 }
