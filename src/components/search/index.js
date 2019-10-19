@@ -52,8 +52,11 @@ class Search extends React.Component {
     if (model === undefined || city === undefined || !model || !city) {
       console.log('enter a city and model');
     } else if (model.value === undefined || city.value === undefined) {
+      console.log('enter a city and model');
+    } else {
       this.props.fetchYears(model.value, city.value)
     }
+
   }
 
   models = () => Object.keys(this.props.models).map((model) => {
@@ -87,7 +90,7 @@ class Search extends React.Component {
             </Col>
             <Col xs={12} md={2}>
               <span className="input-group-text">Enter Year</span>
-              <Field name="year" component={DropDown} options={years} onFocus={this.onFocusYear} />
+              <Field name="year" component={DropDown} options={this.years()} onFocus={this.onFocusYear} />
             </Col>
           </Row>
           <Row className={`${styles.searchButton} justify-content-center text-center`}>
@@ -125,11 +128,12 @@ const mapStateToProps = (state) => {
     cars: state.cars,
     models: state.models,
     cities: state.cities,
+    years: state.years,
     searchForm: {...{}, ...getFormValues('searchForm')(state)}
   }
 }
 
-export default connect(mapStateToProps, { fetchCars, fetchModels, fetchCities })(reduxForm({
+export default connect(mapStateToProps, { fetchCars, fetchModels, fetchCities, fetchYears })(reduxForm({
   form: 'searchForm',
   validate: validate
 })(Search));
